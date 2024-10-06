@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
 
-export default function Sidebar({ updateMap, latitude, longitude }) {
+export default function Sidebar({ updateMap, latitude, longitude, onLoadData }) {
   const [lat, setLat] = useState(latitude);
   const [lng, setLng] = useState(longitude);
 
@@ -58,6 +58,16 @@ export default function Sidebar({ updateMap, latitude, longitude }) {
             Update Map
           </Button>
         </CardFooter>
+      </Card>
+      <Card className="mt-4">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold">Data</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Button className="w-full" onClick={() => onLoadData(lat, lng)}>
+            Load Data
+          </Button>
+        </CardContent>        
       </Card>
     </div>
   );
