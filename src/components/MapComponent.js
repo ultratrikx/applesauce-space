@@ -39,6 +39,7 @@ const MapComponent = ({ lat, lng }) => {
     const { lat, lng } = event.target.getLatLng();
     console.log(`Marker dragged to: Latitude: ${lat}, Longitude: ${lng}`);
     setMarkerPosition({ lat, lng });
+    setCoordinates({ lat, lng });
   };
 
   const handleMapClick = (event) => {
@@ -49,7 +50,7 @@ const MapComponent = ({ lat, lng }) => {
 
   return (
     <div style={{ display: "flex" }}>
-      <Sidebar updateMap={updateMap} />
+      <Sidebar updateMap={updateMap} latitude={markerPosition.lat} longitude={markerPosition.lng} />
       <MapContainer 
         center={[coordinates.lat, coordinates.lng]} 
         zoom={13} 
