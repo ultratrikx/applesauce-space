@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
+import { Slider } from "@/components/ui/slider"
+
 import SatellitePassoverNotifier from './SatellitePassoverNotifier';
 
 export default function Sidebar({ updateMap, latitude, longitude, onLoadGeoTIFF }) {
@@ -59,6 +61,7 @@ export default function Sidebar({ updateMap, latitude, longitude, onLoadGeoTIFF 
               />
             </div>
           </form>
+          <Slider defaultValue={[33]} max={100} step={1} />
         </CardContent>
         <CardFooter>
           <Button type="submit" className="w-full" onClick={handleSubmit}>
