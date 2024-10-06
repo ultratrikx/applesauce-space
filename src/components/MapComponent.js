@@ -5,6 +5,7 @@ import "../app/globals.css";
 import "leaflet/dist/leaflet.css";
 import Sidebar from "./Sidebar";
 import L from "leaflet"; // Import leaflet for custom icon
+import GeoTIFFLayerComponent from './GeoTIFFLayerComponent'; // Import GeoTIFFLayerComponent
 
 const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false });
 const TileLayer = dynamic(() => import('react-leaflet').then(mod => mod.TileLayer), { ssr: false });
@@ -12,7 +13,7 @@ const Marker = dynamic(() => import('react-leaflet').then(mod => mod.Marker), { 
 const Popup = dynamic(() => import('react-leaflet').then(mod => mod.Popup), { ssr: false });
 
 const customIcon = L.icon({
-  iconUrl: 'https://cdn4.iconfinder.com/data/icons/small-n-flat/24/map-marker-1024.png', // Replace with the path to your custom icon
+  iconUrl: 'marker.png', // Replace with the path to your custom icon
   iconSize: [38, 38], // Size of the icon
   iconAnchor: [19, 38], // Point of the icon which will correspond to marker's location
   popupAnchor: [0, -38] // Point from which the popup should open relative to the iconAnchor
@@ -84,6 +85,7 @@ const MapComponent = () => {
             Your location
           </Popup>
         </Marker>
+        <GeoTIFFLayerComponent /> {/* Add GeoTIFFLayerComponent here */}
       </MapContainer>
     </div>
   );
