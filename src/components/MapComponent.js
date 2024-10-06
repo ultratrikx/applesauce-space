@@ -18,14 +18,26 @@ const customIcon = L.icon({
   popupAnchor: [0, -38] // Point from which the popup should open relative to the iconAnchor
 });
 
-const MapComponent = ({ lat, lng }) => {
-  const [coordinates, setCoordinates] = useState({ lat, lng });
-  const [markerPosition, setMarkerPosition] = useState({ lat, lng });
+const MapComponent = () => {
+  const [coordinates, setCoordinates] = useState({ lat: 51.505, lng: -0.09 }); // Default coordinates
+  const [markerPosition, setMarkerPosition] = useState({ lat: 51.505, lng: -0.09 });
 
   useEffect(() => {
-    setCoordinates({ lat, lng });
-    setMarkerPosition({ lat, lng });
-  }, [lat, lng]);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setCoordinates({ lat: latitude, lng: longitude });
+          setMarkerPosition({ lat: latitude, lng: longitude });
+        },
+        (error) => {
+          console.error("Error getting user location:", error);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  }, []);
 
   const updateMap = (lat, lng) => {
     const parsedLat = parseFloat(lat);
