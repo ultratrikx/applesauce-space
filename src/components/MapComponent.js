@@ -6,6 +6,7 @@ import "leaflet/dist/leaflet.css";
 import Sidebar from "./Sidebar";
 import L from "leaflet"; // Import leaflet for custom icon
 import GeoTIFFLayerComponent from './GeoTIFFLayerComponent'; // Import GeoTIFFLayerComponent
+import Topbar from './Topbar';
 
 const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false });
 const TileLayer = dynamic(() => import('react-leaflet').then(mod => mod.TileLayer), { ssr: false });
@@ -64,6 +65,7 @@ const MapComponent = () => {
 
   return (
     <div style={{ display: "flex" }}>
+      <Topbar />
       <Sidebar updateMap={updateMap} latitude={markerPosition.lat} longitude={markerPosition.lng} onLoadGeoTIFF={() => setLoadGeoTIFF(true)} />
       <MapContainer 
         center={[coordinates.lat, coordinates.lng]} 
