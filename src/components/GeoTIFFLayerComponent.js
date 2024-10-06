@@ -3,11 +3,13 @@ import { useMap } from 'react-leaflet';
 import { fromUrl } from 'geotiff';
 import L from 'leaflet';
 
-const CustomGeoTIFFLayerComponent = () => {
+const GeoTIFFLayerComponent = ({loadGeoTIFF}) => {
   const map = useMap();
   const canvasRef = useRef(null);
 
   useEffect(() => {
+    if (!loadGeoTIFF) return;
+
     const addGeoTIFFLayer = async () => {
       try {
         const tiff = await fromUrl('PlanetDEM_1s_SanFrancisco.tif');
@@ -55,9 +57,9 @@ const CustomGeoTIFFLayerComponent = () => {
     };
 
     addGeoTIFFLayer();
-  }, [map]);
+  }, [loadGeoTIFF, map]);
 
   return null;
 };
 
-export default CustomGeoTIFFLayerComponent;
+export default GeoTIFFLayerComponent;

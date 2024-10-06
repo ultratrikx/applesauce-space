@@ -22,6 +22,7 @@ const customIcon = L.icon({
 const MapComponent = () => {
   const [coordinates, setCoordinates] = useState({ lat: 51.505, lng: -0.09 }); // Default coordinates
   const [markerPosition, setMarkerPosition] = useState({ lat: 51.505, lng: -0.09 });
+  const [loadGeoTIFF, setLoadGeoTIFF] = useState(false);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -63,7 +64,7 @@ const MapComponent = () => {
 
   return (
     <div style={{ display: "flex" }}>
-      <Sidebar updateMap={updateMap} latitude={markerPosition.lat} longitude={markerPosition.lng} />
+      <Sidebar updateMap={updateMap} latitude={markerPosition.lat} longitude={markerPosition.lng} onLoadGeoTIFF={() => setLoadGeoTIFF(true)} />
       <MapContainer 
         center={[coordinates.lat, coordinates.lng]} 
         zoom={13} 
@@ -85,7 +86,7 @@ const MapComponent = () => {
             Your location
           </Popup>
         </Marker>
-        <GeoTIFFLayerComponent /> {/* Add GeoTIFFLayerComponent here */}
+        <GeoTIFFLayerComponent loadGeoTIFF={loadGeoTIFF}/> {/* Add GeoTIFFLayerComponent here */}
       </MapContainer>
     </div>
   );
