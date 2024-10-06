@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 
-
-const SatellitePassoverNotifier = () => {
+const SatellitePassoverNotifier = ({ latitude, longitude }) => {
   const [username, setUsername] = useState('');
   const [notification, setNotification] = useState('');
 
   const handleNotify = () => {
     // Placeholder for actual notification logic
-    setNotification(`User ${username} will be notified of the next satellite passover.`);
+    setNotification(`User ${username} will be notified of the next satellite passover at latitude ${latitude} and longitude ${longitude}.`);
   };
 
   return (

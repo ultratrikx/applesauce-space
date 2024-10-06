@@ -45,7 +45,7 @@ const GeoTIFFLayerComponent = ({loadGeoTIFF}) => {
 
         // Create an ImageOverlay with the canvas
         const imageBounds = [[ymin, xmin], [ymax, xmax]];
-        const imageOverlay = L.imageOverlay(canvas.toDataURL(), imageBounds, { opacity: 0.3 }).addTo(map);
+        const imageOverlay = L.imageOverlay(canvas.toDataURL(), imageBounds, { opacity: 0.5  }).addTo(map);
 
         // Fit the map to the image bounds
         map.fitBounds(imageBounds);

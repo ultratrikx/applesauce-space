@@ -74,7 +74,7 @@ export default function Sidebar({ updateMap, latitude, longitude, onLoadGeoTIFF 
           <Button className="w-full" onClick={handleLoadGeoTIFF} >Load GeoTIFF</Button>
         </CardContent>
       </Card>
-      {showSatellitePassover && <SatellitePassoverNotifier />}
+      {showSatellitePassover && <SatellitePassoverNotifier latitude={lat} longitude={lng} />}
     </div>
   );
 }
