@@ -1,14 +1,13 @@
 import React, { useEffect, useRef } from 'react';
-import { useMap } from 'react-leaflet';
 import { fromUrl } from 'geotiff';
 import L from 'leaflet';
 
-const GeoTIFFLayerComponent = ({loadGeoTIFF}) => {
-  const map = useMap();
+const GeoTIFFLayerComponent = ({ map, loadGeoTIFF, cloudCover, selectedBand }) => {
   const canvasRef = useRef(null);
+  console.log('GeoTIFFLayerComponent:', loadGeoTIFF, cloudCover, selectedBand);
 
   useEffect(() => {
-    if (!loadGeoTIFF) return;
+    if (!loadGeoTIFF || !map) return;
 
     const addGeoTIFFLayer = async () => {
       try {
@@ -32,7 +31,7 @@ const GeoTIFFLayerComponent = ({loadGeoTIFF}) => {
 
         // Fill the ImageData
         for (let i = 0; i < data.length; i++) {
-          const val = data[i];
+          const val = data[i] * (cloudCover / 100);  // Apply cloud cover as a percentage
           const idx = i * 4;
           imageData.data[idx] = val;
           imageData.data[idx + 1] = val;
@@ -45,7 +44,7 @@ const GeoTIFFLayerComponent = ({loadGeoTIFF}) => {
 
         // Create an ImageOverlay with the canvas
         const imageBounds = [[ymin, xmin], [ymax, xmax]];
-        const imageOverlay = L.imageOverlay(canvas.toDataURL(), imageBounds, { opacity: 0.5  }).addTo(map);
+        const imageOverlay = L.imageOverlay(canvas.toDataURL(), imageBounds, { opacity: 0.3 }).addTo(map);
 
         // Fit the map to the image bounds
         map.fitBounds(imageBounds);
@@ -57,7 +56,7 @@ const GeoTIFFLayerComponent = ({loadGeoTIFF}) => {
     };
 
     addGeoTIFFLayer();
-  }, [loadGeoTIFF, map]);
+  }, [loadGeoTIFF, cloudCover, selectedBand, map]);
 
   return null;
 };

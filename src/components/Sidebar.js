@@ -4,7 +4,15 @@ import React, { useState, useEffect } from 'react'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
-import { Slider } from "@/components/ui/slider"
+import GeoTIFFLayerComponent from './GeoTIFFLayerComponent'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
 
 import SatellitePassoverNotifier from './SatellitePassoverNotifier';
 
@@ -12,7 +20,10 @@ export default function Sidebar({ updateMap, latitude, longitude, onLoadGeoTIFF 
   const [lat, setLat] = useState(latitude);
   const [lng, setLng] = useState(longitude);
   const [showSatellitePassover, setShowSatellitePassover] = useState(false);
-  
+  const [cloudCover, setCloudCover] = useState(10);
+  const [selectedBand, setSelectedBand] = useState('band1');
+
+
   useEffect(() => {
     setLat(latitude);
     setLng(longitude);
@@ -26,6 +37,13 @@ export default function Sidebar({ updateMap, latitude, longitude, onLoadGeoTIFF 
   const handleLoadGeoTIFF = () => {
     onLoadGeoTIFF();
     setShowSatellitePassover(true);
+  };
+  const handleCloudCoverChange = (e) => {
+    setCloudCover(e.target.value);
+  };
+
+  const handleSelectChange = (value) => {
+    setSelectedBand(value);
   };
 
   return (
@@ -62,10 +80,33 @@ export default function Sidebar({ updateMap, latitude, longitude, onLoadGeoTIFF 
             </div>
           </form>
       <div className="mt-6 mb-4">
-        <h3 className="text-lg font-medium mb-2">Adjust Value</h3>
-        <Slider defaultValue={[10]} max={100} step={1} />
-        {/*this goes to GeoTIFFLayerComponent*/}
-      </div>
+            <h3 className="text-lg font-medium mb-2">Adjust Cloud Cover</h3>
+            <Input
+              type="number"
+              value={cloudCover}
+              onChange={handleCloudCoverChange}
+              max={100}
+              min={0}
+              step={1}
+              className="w-full p-2 border border-gray-300 rounded"
+            />
+            {/*this goes to GeoTIFFLayerComponent*/}
+          </div>
+          <div className="mt-6 mb-4">
+            <h3 className="text-lg font-medium mb-2">Select Band</h3>
+            <Select value={selectedBand} onValueChange={handleSelectChange}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select Band" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="band1">Band 1</SelectItem>
+                <SelectItem value="band2">Band 2</SelectItem>
+                <SelectItem value="band3">Band 3</SelectItem>
+                <SelectItem value="band4">Band 4</SelectItem>
+                <SelectItem value="band5">Band 5</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
       
 
         </CardContent>
@@ -84,6 +125,8 @@ export default function Sidebar({ updateMap, latitude, longitude, onLoadGeoTIFF 
         </CardContent>
       </Card>
       {showSatellitePassover && <SatellitePassoverNotifier latitude={lat} longitude={lng} />}
+      <GeoTIFFLayerComponent latitude={lat} longitude={lng} cloudCover={cloudCover} selectedBand={selectedBand} />
+      {/* <GeminiInsights /> */}
     </div>
   );
 }
