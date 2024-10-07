@@ -61,7 +61,13 @@ export default function Sidebar({ updateMap, latitude, longitude, onLoadGeoTIFF 
               />
             </div>
           </form>
-          <Slider defaultValue={[33]} max={100} step={1} />
+      <div className="mt-6 mb-4">
+        <h3 className="text-lg font-medium mb-2">Adjust Value</h3>
+        <Slider defaultValue={[10]} max={100} step={1} />
+        {/*this goes to GeoTIFFLayerComponent*/}
+      </div>
+      
+
         </CardContent>
         <CardFooter>
           <Button type="submit" className="w-full" onClick={handleSubmit}>

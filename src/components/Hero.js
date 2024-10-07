@@ -20,11 +20,12 @@ const Hero = () => {
     'scientist 🔬'
   ];
 
+  
   const [profession, setProfession] = useState('');
   useEffect(() => {
     const randomProfession = professions[Math.floor(Math.random() * professions.length)];
     setProfession(randomProfession);
-  }, []);
+  }, [professions]);
 
   return (
     <div className="flex relative z-10 flex-col items-start px-20 pt-96 pb-32 w-full min-h-[1083px] max-md:px-5 max-md:py-24 max-md:max-w-full">
