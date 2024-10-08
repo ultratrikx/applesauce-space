@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -8,13 +8,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 const Map = dynamic(() => import('../../components/Map'), { ssr: false });
 const Sidebar2 = dynamic(() => import('../../components/Sidebar2'), { ssr: false });
 
-const ResultsPage = () => {
+const ResultsPageContent = () => {
   const searchParams = useSearchParams();
   
   const lat = searchParams.get('lat');
   const lng = searchParams.get('lng');
   const cloudCover = searchParams.get('cloudCover');
-//   const selectedBand = searchParams.get('selectedBand');
 
   const [boundingBox, setBoundingBox] = useState(null);
   const [tiffFiles, setTiffFiles] = useState([]);
@@ -22,13 +21,11 @@ const ResultsPage = () => {
   const [proxyTiffUrl, setProxyTiffUrl] = useState('');
   const [error, setError] = useState(null);
 
-//   const adj = 5.0
-  // Hardcoded values for testing
   const boundingBoxTEST = {
     xmax: -3.10981,
     xmin: -6.56437,
-    ymax: 51.38369, //- adj,
-    ymin: 49.14807 //- adj
+    ymax: 51.38369,
+    ymin: 49.14807
   };
   const tiffFilesTEST = [
     "https://terraview-applesauce.s3.amazonaws.com/FALSE_COLOUR.tif",
@@ -84,6 +81,14 @@ const ResultsPage = () => {
         />
       </div>
     </div>
+  );
+};
+
+const ResultsPage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ResultsPageContent />
+    </Suspense>
   );
 };
 
